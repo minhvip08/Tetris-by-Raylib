@@ -11,20 +11,21 @@ private:
     Block nextBlock;
     bool isBlockOutside();
     void rotateBlock();
-public:
-    Game();
+    void reset();
+    void updateScore(int linesCleared, int moveDownPoints);
     Block getRandomBlock();
     std::vector<Block> getAllBlocks();
-
+    void MoveBlockLeft();
+    void moveBlockRight();
+    Grid grid;
+public:
+    void moveBlockDown();
+    int score;
+    Game();
+    bool blockFits();
     void draw();
     void handleInput();
 
-    void MoveBlockLeft();
-
-    void moveBlockRight();
-
-    void moveBlockDown();
     void lockBlock();
-
-    Grid grid;
+    bool gameOver;
 };

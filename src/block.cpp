@@ -10,11 +10,11 @@ Block::Block()
     rowOffset = 0;
 }
 
-void Block::draw() 
+void Block::draw(int offsetX, int offsetY) 
 {
     std::vector<Position> titles =getCellPositions();
     for (Position item: titles){
-        DrawRectangle(item.col * cellSize +1, item.row * cellSize +1, cellSize -1 , cellSize -1, colors[id]);
+        DrawRectangle(item.col * cellSize +offsetX, item.row * cellSize +offsetY, cellSize -1 , cellSize -1, colors[id]);
     }
     
 }
@@ -37,12 +37,19 @@ std::vector<Position> Block::getCellPositions()
 
 void Block::rotate()
 {
+    if (id == 4){
+        return;
+    }
     rotationState = (rotationState + 1) % 4;
+
     
 }
 
 void Block::undoRotate()
 {
+    if (id == 4){
+        return;
+    }
     rotationState = rotationState - 1;
     if (rotationState < 0){
         rotationState = cells.size() - 1;

@@ -3,6 +3,54 @@
 #include "color.h"
 #include <iostream>
 
+bool Grid::isRowFull(int row)
+{
+    for(int i = 0; i < numCols; i++)
+    {
+        if (grid[row][i] == 0)
+        {
+            return false;
+        }
+    }
+    return true;
+}
+
+void Grid::clearRow(int row)
+{
+    for (int col = 0; col < numCols; col++)
+    {
+        grid[row][col] = 0;
+    }
+}
+
+void Grid::moveRowsDown(int row, int numRowsToMoveDown)
+{
+     for (int col = 0; col < numCols; col++){
+        grid[row + numRowsToMoveDown][col] = grid[row][col];
+        grid[row][col] = 0;
+     }
+}
+
+int Grid::clearFullRows()
+{
+    int completedRows = 0;
+    for (int row = numRows-1 ; row >= 0; row--)
+    {
+        if (isRowFull(row))
+        {
+            clearRow(row);
+
+            completedRows++;
+        }
+        else if (completedRows > 0)
+        {
+            moveRowsDown(row, completedRows);
+        }
+    }
+
+    return completedRows;
+}
+
 Grid::Grid()
 {
     numRows = 20;
@@ -66,7 +114,7 @@ void Grid::drawGrid()
         {
             int cellValue = grid[i][j];
             Color cellColor = colors[cellValue];
-            DrawRectangle(j * cellSize + 1, i * cellSize + 1, cellSize -1 , cellSize -1, cellColor);
+            DrawRectangle(j * cellSize + 11, i * cellSize + 11, cellSize -1 , cellSize -1, cellColor);
         }
     }
 }

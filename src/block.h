@@ -14,7 +14,7 @@ private:
     std::vector<Color> colors;
 public:
     Block();
-    void draw();
+    void draw(int offsetX, int offsetY);
     void move(int row, int col);
     std::vector<Position> getCellPositions();
     int id;
