@@ -1,27 +1,36 @@
 #include <raylib.h>
-#include "ball.h"
+#include "game.h"
 
+double lastUpdateTime = 0;
+
+bool EventTriggered(double time)
+{
+    if (GetTime() - lastUpdateTime > time)
+    {
+        lastUpdateTime = GetTime();
+        return true;
+    }
+    return false;
+}
+ 
 int main()
 {
-    Color darkGreen = Color{20, 160, 133, 255};
-
-    const int screenWidth = 800;
-    const int screenHeight = 600;
-
-    Ball ball = Ball();
-
-    InitWindow(screenWidth, screenHeight, "My first RAYLIB program!");
+    Color color = {44,44,127,255};
+    InitWindow(300, 600, "Hello World");
     SetTargetFPS(60);
 
-    while (!WindowShouldClose())
+    Game game = Game();
+
+    while (WindowShouldClose() == false)
     {
+        game.handleInput();
+        if (EventTriggered(0.7))
+            game.moveBlockDown();
+
         BeginDrawing();
-        ClearBackground(darkGreen);
-        ball.Update();
-        ball.Draw();
+        ClearBackground(color);
+        game.draw();
         EndDrawing();
     }
-
     CloseWindow();
-    return 0;
 }
